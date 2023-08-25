@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.30-debian
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: routesdb
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build: .
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql
+    volumes:
+      - .:/app
+
+volumes:
+  mysql-data:
